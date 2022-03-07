@@ -4,7 +4,7 @@ function Post({ post }) {
   const router = useRouter()
 
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return <h1>Loading...</h1>
   }
 
   return (
@@ -26,7 +26,14 @@ export async function getStaticProps(context) {
   )
   const data = await response.json()
 
+  if(!data.id){
+    return{
+      notFound: true,
+    }
+  }
+
   console.log(`Generating page for /posts/${params.postId}`)
+
   return {
     props: {
       post: data
@@ -35,21 +42,21 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-  const data = await response.json()
-  const paths = data.map(post => {
-    return {
-      params: { postId: `${post.id}` }
-    }
-  })
+  // const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+  // const data = await response.json()
+  // const paths = data.map(post => {
+  //   return {
+  //     params: { postId: `${post.id}` }
+  //   }
+  // })
 
   return {
-    // paths: [
-    //   { params: { postId: '1' } },
-    //   { params: { postId: '2' } },
-    //   { params: { postId: '3' } }
-    // ],
-    paths,
-    fallback: false
+    paths: [
+      { params: { postId: '1' } },
+      { params: { postId: '2' } },
+      { params: { postId: '3' } }
+    ],
+    // paths,
+    fallback: true
   }
 }
