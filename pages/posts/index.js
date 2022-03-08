@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 function PostList({ posts }) {
+  console.log("posts ",posts)
   return (
     <>
       <h1>List of Posts</h1>
@@ -23,6 +24,7 @@ function PostList({ posts }) {
 export default PostList
 
 export async function getStaticProps() {
+  console.log("getStaticProps")
   const response = await fetch('https://jsonplaceholder.typicode.com/posts')
   const data = await response.json()
 
